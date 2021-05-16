@@ -1,0 +1,47 @@
+﻿@model OnlineKirana.Models.Admin
+@{ Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .centre {
+        margin-left: 20%;
+        margin-right: auto;
+        text-align: center;
+        position: center;
+    }
+
+    table {
+        width: 40%;
+        margin-left: 30%;
+        margin-right: 30%;
+        text-align: center;
+    }
+</style>
+
+
+
+
+
+<div class="centre">
+    <h2>Login Here</h2>
+
+    <table>
+        @{
+            Html.BeginForm("Index", "Admin", FormMethod.Post);
+            <tr>
+                <td>Email :</td>
+                <td>@Html.TextBoxFor(a => a.Email)</td>
+            </tr>
+            <tr>
+                <td>Password :</td>
+                <td>@Html.PasswordFor(a => a.Password)</td>
+            </tr>
+            <tr>
+                <td>@ViewBag.msg</td>
+                <td><input type="submit" value="Login" /></td>
+            </tr>
+        }
+    </table>
+
+</div>
+
+

@@ -1,0 +1,23 @@
+﻿@model OnlineKirana.Models.Product
+@foreach (var p in ViewBag.Pro)
+{
+    <h2>Add Images for @p.ProductName</h2>
+
+}
+@{ 
+    Html.BeginForm("Images", "ManageProducts", FormMethod.Post, new { enctype="multipart/form-data" });
+    <table>
+        <tr>
+            <td>
+                Select Image:
+            </td>
+            <td><input type="file" name="file" /></td>
+            <td><input type="submit" name="save" /></td>
+        </tr>
+    </table>
+}
+
+
+
+
+

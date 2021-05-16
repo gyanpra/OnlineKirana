@@ -1,0 +1,300 @@
+﻿@model IEnumerable<OnlineKirana.Models.Product>
+
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/modernizr/modernizr.js"></script>
+
+</head>
+<body>
+    <style>
+        body {
+            padding-top: 0px;
+            padding-bottom: 40px;
+            color: #5a5a5a;
+        }
+
+        .input-group {
+            margin-left: auto;
+            margin-right: 0;
+            width: 50%;
+            padding: 10px;
+        }
+
+        .cart-button {
+            position: relative;
+            padding: 10px;
+            width: 200px;
+            height: 60px;
+            border: 0;
+            border-radius: 10px;
+            background-color: #483;
+            outline: none;
+            cursor: pointer;
+            color: #fff;
+            transition: .3s ease-in-out;
+            overflow: hidden;
+        }
+
+            .cart-button:hover {
+                background-color: #35269b;
+            }
+
+            .cart-button:active {
+                transform: scale(.9);
+            }
+
+            .cart-button .fa-shopping-cart {
+                position: absolute;
+                z-index: 2;
+                top: 50%;
+                left: -10%;
+                font-size: 2em;
+                transform: translate(-50%,-50%);
+            }
+
+            .cart-button .fa-box {
+                position: absolute;
+                z-index: 3;
+                top: -20%;
+                left: 52%;
+                font-size: 1.2em;
+                transform: translate(-50%,-50%);
+            }
+
+            .cart-button span {
+                position: absolute;
+                z-index: 3;
+                left: 50%;
+                top: 50%;
+                font-size: 1.2em;
+                color: #fff;
+                transform: translate(-50%,-50%);
+            }
+
+                .cart-button span.add-to-cart {
+                    opacity: 1;
+                }
+
+                .cart-button span.added {
+                    opacity: 0;
+                }
+
+            .cart-button.clicked .fa-shopping-cart {
+                animation: cart 1.5s ease-in-out forwards;
+            }
+
+            .cart-button.clicked .fa-box {
+                animation: box 1.5s ease-in-out forwards;
+            }
+
+            .cart-button.clicked span.add-to-cart {
+                animation: txt1 1.5s ease-in-out forwards;
+            }
+
+            .cart-button.clicked span.added {
+                animation: txt2 1.5s ease-in-out forwards;
+            }
+
+        @@keyframes cart {
+            0% {
+                left: -10%;
+            }
+
+            40%, 60% {
+                left: 50%;
+            }
+
+            100% {
+                left: 110%;
+            }
+        }
+
+        @@keyframes box {
+            0%, 40% {
+                top: -20%;
+            }
+
+            60% {
+                top: 40%;
+                left: 52%;
+            }
+
+            100% {
+                top: 40%;
+                left: 112%;
+            }
+        }
+
+        @@keyframes txt1 {
+            0% {
+                opacity: 1;
+            }
+
+            20%, 100% {
+                opacity: 0;
+            }
+        }
+
+        @@keyframes txt2 {
+            0%, 80% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .cart {
+            position: absolute;
+            top: 15%;
+            left: 60%;
+            margin: auto;
+            border-radius: 6px;
+            height: 60px;
+            width: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #efefef;
+            margin: 15px;
+            font-size: 20px;
+            background-color: #212121;
+            color: #efefef;
+        }
+
+        .count {
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            background-color: #85cb33;
+            border-radius: 500px;
+            font-size: 14px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            top: 0px;
+            right: 0px;
+            color: #100b00;
+            transform: translate(50%, -50%);
+            z-index: 1;
+        }
+    </style>
+
+
+
+    <div class="input-group">
+        @using (Html.BeginForm("Index", "product", FormMethod.Get))
+        {
+            <b>Search By:</b><br />
+            @Html.RadioButton("SearchBy", "ProductName", true) <text>ProductName</text><br />
+            @Html.RadioButton("SearchBy", "Category") <text>Category</text><br />
+            @Html.RadioButton("SearchBy", "Brand") <text>Brand</text><br />
+            @Html.TextBox("Search")<text>&nbsp;</text><input type="submit" value="Submit" />
+        }
+
+        <div class="cart">
+            <i class="fa fa-shopping-cart">
+            </i>
+            <span class="count">0</span>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- DataTables Example -->
+        <div class="card mb-5">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Category Details
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Brand</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Add to Cart</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() == 0)
+                            {
+                                <tr>
+                                    <td colspan="6">
+                                        Match Not Found.
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @{ var base64 = Convert.ToBase64String(item.ProductImage);
+                                                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64); }
+                                            <img src='@imgsrc' style="max-height:250px; max-width:250px" />
+                                        </td>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.Brand</td>
+                                        <td>@item.Category</td>
+                                        <td>@item.Price</td>
+                                        <td>
+                                            <button class="cart-button">
+                                                <span class="add-to-cart">Add to cart</span>
+                                                <span class="added">Added</span>
+                                                <i class="fas fa-shopping-cart"></i>
+                                                <i class="fas fa-box"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script>
+        const cartButtons = document.querySelectorAll('.cart-button');
+        const cartCountValue = document.querySelectorAll('.count');
+
+        cartButtons.forEach(button => {
+            button.addEventListener('click', cartClick);
+
+
+        });
+
+        function cartClick() {
+            let button = this;
+            button.classList.add('clicked');
+
+        }
+    </script>
+</body>
+</html>
+

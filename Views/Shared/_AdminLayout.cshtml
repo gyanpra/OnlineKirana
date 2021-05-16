@@ -1,0 +1,96 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Online Kirana</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300" />
+    <script src="~/Content/modernizr/modernizr.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        body {
+            padding-top: 0px;
+            padding-bottom: 40px;
+            color: #5a5a5a;
+        }
+
+        .navbar-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+        }
+
+            .navbar-wrapper .container {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .navbar-wrapper .navbar {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+        .wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .mr-auto span {
+            padding: 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-header">
+                @Html.ActionLink("Online Kirana", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div></div>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <div class="navbar-nav mr-auto">
+                    @if (Session["Email"] != null)
+                    {
+                        <span class="navbar-text">@Html.ActionLink("DashBoard", "Dashboard", "Admin")</span>
+                        <span class="navbar-text">@Html.ActionLink("Products", "Index", "Category")</span>
+                        <span class="navbar-text">@Html.ActionLink("Orders", "Orders", "Orders")</span>
+                    }
+                </div>
+
+                @if (Session["Email"] != null)
+                {
+                    <button type="button" class="btn btn-success">Welcome, @Session["Email"].ToString()</button><text>&nbsp;</text>
+                    <span class="navbar-text btn btn-danger">@Html.ActionLink("Logout", "Logout", "Admin")</span>
+                }
+
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Online Kirana</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="~/Content/jquery/jquery.min.js"></script>
+    <script src="~/Content/twitter-bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js"></script>
+</body>
+</html>
