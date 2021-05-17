@@ -27,5 +27,16 @@ namespace OnlineKirana.Controllers
                 return View(db.Products.Where(x => x.ProductName.StartsWith(search) || search == null).ToList());
             }
         }
+
+        public ActionResult Order()
+        {
+            return View();
+        }
+
+        public ActionResult OrderDetails()
+        {
+            return View();
+        }
+        
     }
 }

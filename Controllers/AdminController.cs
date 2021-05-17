@@ -27,7 +27,7 @@ namespace OnlineKirana.Controllers
             if (a.Count>0)
             {
                 Session["Email"] = admn.Email.ToString();
-                return RedirectToAction("Create","ManageProducts");
+                return RedirectToAction("Index","ManageProducts");
 
             }
             else

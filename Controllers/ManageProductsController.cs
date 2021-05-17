@@ -13,12 +13,14 @@ namespace OnlineKirana.Controllers
 {
     public class ManageProductsController : Controller
     {
-        private OnlineKiranaEntities db = new OnlineKiranaEntities();
+        public OnlineKiranaEntities db = new OnlineKiranaEntities();
         // GET: ManageProducts
         public ActionResult Index()
         {
             return View(db.Products.ToList());
         }
+
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -33,6 +35,7 @@ namespace OnlineKirana.Controllers
             return View(product);
         }
 
+
         public ActionResult Create()
         {
             return View();
@@ -40,17 +43,26 @@ namespace OnlineKirana.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductName,Category,Brand,Price,QualityOnHand,ReOrderLevel")] Product product)
+        public ActionResult Create(Product product, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
-            {
-                db.Products.Add(product);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            return View(product);
+            string pic = null;
+            if (file != null)
+            {
+                pic = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(Server.MapPath("~/Content/Images/"), pic);
+                file.SaveAs(path);
+
+            }
+            //product.ProductImage = pic;
+            db.Products.Add(product);
+            db.SaveChanges();
+            return RedirectToAction("index");
+
+
         }
+
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -67,16 +79,39 @@ namespace OnlineKirana.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,Name,Category,Brand,imagePath,Sex,Price,StockInDate")] Product product)
+        public ActionResult Edit(Product product, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            string pic = null;
+            if (file != null)
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                pic = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(Server.MapPath("~/Content/Images/"), pic);
+                file.SaveAs(path);
             }
-            return View(product);
+            //product.ProductImage = file != null ? pic : product.ProductImage;
+            db.Entry(product).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("index");
         }
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: Products/Delete/5
         public ActionResult Delete(int? id)
@@ -93,6 +128,7 @@ namespace OnlineKirana.Controllers
             return View(product);
         }
 
+
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -102,37 +138,6 @@ namespace OnlineKirana.Controllers
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        public ActionResult Images(int id)
-        {
-            var pro = db.Products.Where(l => l.ProductID == id).ToList();
-            if (pro == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.pro = pro;
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Images(int id, HttpPostedFileBase file)
-        {
-            string path = System.IO.Path.Combine("~/Content/Images/"+ file.FileName);
-            file.SaveAs(Server.MapPath(path));
-            
-            return View("Index");
-        }
-
-
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
 
