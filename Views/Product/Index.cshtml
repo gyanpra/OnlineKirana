@@ -191,6 +191,8 @@
 
 
 
+
+
     <div class="input-group">
         @using (Html.BeginForm("Index", "product", FormMethod.Get))
         {
@@ -206,6 +208,29 @@
             </i>
             <span class="count">0</span>
         </div>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-4">
+                <div class="card">
+                    <img class="card-img-top" >
+                    <div class="card-body">
+                        <h2 class="card-title">@item.ProductName</h2>
+                        <p class="card-body">@item.Brand</p>
+                        <p class="card-body">@item.Category</p>
+                        <p class="card-body">@item.Price</p>
+                        <button class="btn cart-button">
+                            <span class="add-to-cart">Add to cart</span>
+                            <span class="added">Added</span>
+                            <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-box"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 
     <div class="container-fluid">
@@ -244,11 +269,7 @@
                                 {
 
                                     <tr>
-                                        <td>
-                                            @{ var base64 = Convert.ToBase64String(item.ProductImage);
-                                                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64); }
-                                            <img src='@imgsrc' style="max-height:250px; max-width:250px" />
-                                        </td>
+
                                         <td>@item.ProductName</td>
                                         <td>@item.Brand</td>
                                         <td>@item.Category</td>
@@ -294,7 +315,13 @@
             button.classList.add('clicked');
 
         }
+
+        
     </script>
-</body>
+
+    
+    </body>
 </html>
 
+
+    

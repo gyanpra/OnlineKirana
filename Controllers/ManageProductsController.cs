@@ -88,7 +88,8 @@ namespace OnlineKirana.Controllers
                 string path = System.IO.Path.Combine(Server.MapPath("~/Content/Images/"), pic);
                 file.SaveAs(path);
             }
-            //product.ProductImage = file != null ? pic : product.ProductImage;
+            byte[] b1 = System.Text.Encoding.UTF8.GetBytes(pic);
+            product.ProductImage = file != null ?b1 : product.ProductImage;
             db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("index");

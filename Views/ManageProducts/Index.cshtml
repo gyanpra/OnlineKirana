@@ -46,11 +46,8 @@
                         <td>@item.Price</td>
                         <td>@item.ReOrderLevel</td>
                         <td>@item.QualityOnHand</td>
-                        <td>
-                            @{ var base64 = Convert.ToBase64String(item.ProductImage);
-                                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64); }
-                            <img src='@imgsrc' style="max-height:200px; max-width:200px" />
-                        </td>
+                        <td>@item.ProductImage</td>
+
 
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })
@@ -61,9 +58,14 @@
                     </tr>
 
                         //count++;
-                    //<td>
+                        //<td>
                         //@item.ProductImage
                         //<img src='#' style="max-height:250px; max-width:250px" />
+                        //</td>
+                    //<td>
+                       // @{ var base64 = Convert.ToBase64String(item.ProductImage);
+                           // var imgsrc = string.Format("data:image/jpg;base64,{0}", base64); }
+                        //<img src='@imgsrc' style="max-height:200px; max-width:200px" />
                     //</td>
                 }
 
