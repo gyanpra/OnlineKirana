@@ -11,6 +11,9 @@ namespace OnlineKirana.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web;
     
     public partial class Product
     {
@@ -26,10 +29,11 @@ namespace OnlineKirana.Models
         public string Category { get; set; }
         public string Brand { get; set; }
         public int Price { get; set; }
-        public byte[] ProductImage { get; set; }
+        public string ProductImage { get; set; }
         public int QualityOnHand { get; set; }
         public int ReOrderLevel { get; set; }
-    
+        public HttpPostedFileBase ImageFile { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

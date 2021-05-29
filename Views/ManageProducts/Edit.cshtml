@@ -1,82 +1,96 @@
 ﻿@model OnlineKirana.Models.Product
+
 @{
     ViewBag.Title = "Edit";
 }
 @{ Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<h2>Edit</h2>
+@Html.Raw(TempData["UpdateMessage"])
+@Html.Raw(TempData["SizeMessage"])
+@Html.Raw(TempData["ExtensionMessage"])
 
-    <h2>Edit</h2>
-    <script src="@Url.Content("~/Content/jquery/jquery.min.js")"></script>
-    <script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js")"></script>
-    @using (Html.BeginForm("Edit", "ManageProducts", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        <fieldset>
-            <legend>Product Edit</legend>
+<script src="@Url.Content("~/Content/jquery/jquery.min.js")"></script>
+<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js")"></script>
+@using (Html.BeginForm("Edit", "ManageProducts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.ProductName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.ProductName)
-                @Html.ValidationMessageFor(model => model.ProductName)
-            </div>
+    <div class="form-horizontal">
+        <h4>Product Edit</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ProductID)
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Category)
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
             </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Category)
-                @Html.ValidationMessageFor(model => model.Category)
-            </div>
+        </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Brand)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
             </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Brand)
-                @Html.ValidationMessageFor(model => model.Brand)
-            </div>
+        </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Price)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Brand, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })
             </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Price)
-                @Html.ValidationMessageFor(model => model.Price)
-            </div>
+        </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.QualityOnHand)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.QualityOnHand)
-                @Html.ValidationMessageFor(model => model.QualityOnHand)
-            </div>
+        </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.ReOrderLevel)
+        <div class="form-group">
+            @Html.LabelFor(model => model.QualityOnHand, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.QualityOnHand, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.QualityOnHand, "", new { @class = "text-danger" })
             </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.ReOrderLevel)
-                @Html.ValidationMessageFor(model => model.ReOrderLevel)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReOrderLevel, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReOrderLevel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReOrderLevel, "", new { @class = "text-danger" })
             </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label" })
-                <div class="editor-field">
-                    <input type="file" name="file" id="file" style="width: 100%;" />
-                    @Html.ValidationMessageFor(model => model.ProductImage, "", new { @class = "text-danger" })
-                </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                <img src="@Url.Content(Session["Image"].ToString())" height="100" widht="100" />
+                <hr />
+                <input type="file" name="ImageFile" id="file" />
             </div>
+        </div>
 
-
-
-            <p>
-                <input type="submit" value="Save" />
-            </p>
-        </fieldset>
-    }
-    <div>
-        @Html.ActionLink("Back to List", "Index")
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+

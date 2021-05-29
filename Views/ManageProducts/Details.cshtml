@@ -12,38 +12,40 @@
 <fieldset>
     <legend>Product Details</legend>
 
-    <div class="display-label">ProductName</div>
+    <div class="display-label font-weight-bold">ProductName</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.ProductName)
     </div>
 
-    <div class="display-label">Category</div>
+    <div class="display-label font-weight-bold">Category</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Category)
     </div>
 
-    <div class="display-label">Brand</div>
+    <div class="display-label font-weight-bold">Brand</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Brand)
     </div>
 
-    <div class="display-label">Price</div>
+    <div class="display-label font-weight-bold">Price</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Price)
     </div>
 
-    <div class="display-label">QualityOnHand</div>
+    <div class="display-label font-weight-bold">QualityOnHand</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.QualityOnHand)
     </div>
-    <div class="display-label">ReOrderLevel</div>
+    <div class="display-label font-weight-bold">ReOrderLevel</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.ReOrderLevel)
     </div>
-    <div class="display-label">Image</div>
+    <div class="display-label font-weight-bold">Image</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.ProductImage)
-        
+        <br/>
+        <img src="@Url.Content(Session["Image"].ToString())" height="100" widht="100" />
+
 
     </div>
 

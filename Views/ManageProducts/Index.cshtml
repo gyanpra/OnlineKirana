@@ -6,6 +6,8 @@
 }
 
 <h2>Index</h2>
+@Html.Raw(TempData["CreateMessage"])
+@Html.Raw(TempData["UpdateMessage"])
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -37,7 +39,6 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        //int count = 1;
                     <tr>
                         <td>@item.ProductID</td>
                         <td>@item.ProductName</td>
@@ -46,27 +47,20 @@
                         <td>@item.Price</td>
                         <td>@item.ReOrderLevel</td>
                         <td>@item.QualityOnHand</td>
-                        <td>@item.ProductImage</td>
+                        <td>
+                            <img src="@Url.Content(item.ProductImage)" height="80" width="80"/>
+                        </td>
 
 
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })
-                            @Html.ActionLink("Details", "Details", new { id = item.ProductID })
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                            <button type="button" class="btn btn-secondary">@Html.ActionLink("Edit", "Edit", new { id = item.ProductID })</button>
+                            <button type="button" class="btn btn-dark">@Html.ActionLink("Details", "Details", new { id = item.ProductID })</button>
+                            <button type="button" class="btn btn-danger">@Html.ActionLink("Delete", "Delete", new { id = item.ProductID })</button>
+                            
+
                         </td>
 
                     </tr>
-
-                        //count++;
-                        //<td>
-                        //@item.ProductImage
-                        //<img src='#' style="max-height:250px; max-width:250px" />
-                        //</td>
-                    //<td>
-                       // @{ var base64 = Convert.ToBase64String(item.ProductImage);
-                           // var imgsrc = string.Format("data:image/jpg;base64,{0}", base64); }
-                        //<img src='@imgsrc' style="max-height:200px; max-width:200px" />
-                    //</td>
                 }
 
                     </tbody>

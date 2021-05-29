@@ -21,13 +21,6 @@
             color: #5a5a5a;
         }
 
-        .input-group {
-            margin-left: auto;
-            margin-right: 0;
-            width: 50%;
-            padding: 10px;
-        }
-
         .cart-button {
             position: relative;
             padding: 10px;
@@ -103,56 +96,6 @@
                 animation: txt2 1.5s ease-in-out forwards;
             }
 
-        @@keyframes cart {
-            0% {
-                left: -10%;
-            }
-
-            40%, 60% {
-                left: 50%;
-            }
-
-            100% {
-                left: 110%;
-            }
-        }
-
-        @@keyframes box {
-            0%, 40% {
-                top: -20%;
-            }
-
-            60% {
-                top: 40%;
-                left: 52%;
-            }
-
-            100% {
-                top: 40%;
-                left: 112%;
-            }
-        }
-
-        @@keyframes txt1 {
-            0% {
-                opacity: 1;
-            }
-
-            20%, 100% {
-                opacity: 0;
-            }
-        }
-
-        @@keyframes txt2 {
-            0%, 80% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
         .cart {
             position: absolute;
             top: 15%;
@@ -187,6 +130,31 @@
             transform: translate(50%, -50%);
             z-index: 1;
         }
+
+        .card-deck {
+            margin: 0 -15px;
+            justify-content: space-between;
+        }
+
+            .card-deck .card {
+                margin: 0 0 1rem;
+            }
+
+        .container {
+            padding: 5px 5px 5px 5px;
+        }
+
+        .position-relative {
+            padding: 5px 5px 5px 5px;
+        }
+        .card {
+            margin: 5% 0%;
+        }
+
+        .card-body {
+            margin: 0% 0% 0% 3%;
+            padding: 6% 0%;
+        }
     </style>
 
 
@@ -210,117 +178,37 @@
         </div>
     </div>
 
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-4">
-                <div class="card">
-                    <img class="card-img-top" >
-                    <div class="card-body">
-                        <h2 class="card-title">@item.ProductName</h2>
-                        <p class="card-body">@item.Brand</p>
-                        <p class="card-body">@item.Category</p>
-                        <p class="card-body">@item.Price</p>
-                        <button class="btn cart-button">
-                            <span class="add-to-cart">Add to cart</span>
-                            <span class="added">Added</span>
-                            <i class="fas fa-shopping-cart"></i>
-                            <i class="fas fa-box"></i>
-                        </button>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="container">
+                        <div class="card-deck">
+                            <div class="card">
+                                <img class="card-img-top img-responsive" src="@Url.Content(item.ProductImage)" height="150" width="50" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.ProductName</h5>
+                                    <p class="card-text">Brand-@item.Brand</p>
+                                    <p class="card-text">Category-@item.Category</p>
+                                    <p class="card-text">price-@item.Price</p>
+                                    <button type="button" class="btn btn-danger">Danger</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-
-    <div class="container-fluid">
-        <!-- DataTables Example -->
-        <div class="card mb-5">
-            <div class="card-header">
-                <i class="fas fa-table"></i>
-                Category Details
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Image</th>
-                                <th>Product Name</th>
-                                <th>Brand</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Add to Cart</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.Count() == 0)
-                            {
-                                <tr>
-                                    <td colspan="6">
-                                        Match Not Found.
-                                    </td>
-                                </tr>
-                            }
-                            else
-                            {
-                                foreach (var item in Model)
-                                {
-
-                                    <tr>
-
-                                        <td>@item.ProductName</td>
-                                        <td>@item.Brand</td>
-                                        <td>@item.Category</td>
-                                        <td>@item.Price</td>
-                                        <td>
-                                            <button class="cart-button">
-                                                <span class="add-to-cart">Add to cart</span>
-                                                <span class="added">Added</span>
-                                                <i class="fas fa-shopping-cart"></i>
-                                                <i class="fas fa-box"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                }
-
-                            }
-
-
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
+            }
         </div>
-    </div>
 
 
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-
-    <script>
-        const cartButtons = document.querySelectorAll('.cart-button');
-        const cartCountValue = document.querySelectorAll('.count');
-
-        cartButtons.forEach(button => {
-            button.addEventListener('click', cartClick);
 
 
-        });
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
 
-        function cartClick() {
-            let button = this;
-            button.classList.add('clicked');
 
-        }
-
-        
-    </script>
-
-    
-    </body>
+</body>
 </html>
 
 

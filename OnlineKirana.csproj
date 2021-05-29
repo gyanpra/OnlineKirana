@@ -251,13 +251,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\OnlineKirana.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OnlineKirana.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\OnlineKirana.edmx.diagram">
-      <DependentUpon>OnlineKirana.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\jquery\jquery.min.map" />
     <Content Include="Content\jquery\jquery.slim.min.map" />
     <Content Include="Content\twitter-bootstrap\css\bootstrap-grid.css.map" />
@@ -270,6 +263,13 @@
     <Content Include="Content\twitter-bootstrap\js\bootstrap.bundle.min.js.map" />
     <Content Include="Content\twitter-bootstrap\js\bootstrap.js.map" />
     <Content Include="Content\twitter-bootstrap\js\bootstrap.min.js.map" />
+    <EntityDeploy Include="Models\OnlineKirana.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OnlineKirana.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\OnlineKirana.edmx.diagram">
+      <DependentUpon>OnlineKirana.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -323,8 +323,8 @@
     <Content Include="Views\ManageProducts\Create.cshtml" />
     <Content Include="Views\ManageProducts\Index.cshtml" />
     <Content Include="Views\ManageProducts\Delete.cshtml" />
-    <Content Include="Views\ManageProducts\Edit.cshtml" />
     <Content Include="Views\Product\Order.cshtml" />
+    <Content Include="Views\ManageProducts\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

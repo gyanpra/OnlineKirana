@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.IO;
 using System.Web.Mvc;
 using OnlineKirana;
 using OnlineKirana.Models;
@@ -17,7 +18,8 @@ namespace OnlineKirana.Controllers
         // GET: ManageProducts
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            var data = db.Products.ToList();
+            return View(data);
         }
 
 
@@ -43,22 +45,50 @@ namespace OnlineKirana.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product, HttpPostedFileBase file)
+        public ActionResult Create(Product product)
         {
-
-            string pic = null;
-            if (file != null)
+            if (ModelState.IsValid == true)
             {
-                pic = System.IO.Path.GetFileName(file.FileName);
-                string path = System.IO.Path.Combine(Server.MapPath("~/Content/Images/"), pic);
-                file.SaveAs(path);
+                string fileName = Path.GetFileNameWithoutExtension(product.ImageFile.FileName);
+                string extension = Path.GetExtension(product.ImageFile.FileName);
+                HttpPostedFileBase postedFile = product.ImageFile;
+                int length = postedFile.ContentLength;
 
+                if(extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
+                {
+                    if(length<= 4194304)
+                    {
+                        fileName = fileName + extension;
+                        product.ProductImage = "~/content/Images/" + fileName;
+                        fileName = Path.Combine(Server.MapPath("~/Content/Images/"),fileName);
+                        product.ImageFile.SaveAs(fileName);
+                        db.Products.Add(product);
+                        int a=db.SaveChanges();
+
+                        if (a > 0)
+                        {
+                            TempData["CreateMessage"] = "<script>alert('Product Added Successfully.')</script>";
+                            ModelState.Clear();
+                            return RedirectToAction("Index","ManageProducts");
+                        }
+                        else
+                        {
+                            TempData["CreateMessage"] = "<script>alert('Product not Added.')</script>";
+                        }
+
+                    }
+                    else
+                    {
+                        TempData["SizeMessage"] = "<script>alert('Image should be less than 4 MB.')</script>";
+                    }
+
+                }
+                else
+                {
+                    TempData["ExtensionMessage"] = "<script>alert('format not supported')</script>";
+                }
             }
-            //product.ProductImage = pic;
-            db.Products.Add(product);
-            db.SaveChanges();
-            return RedirectToAction("index");
-
+            return View();
 
         }
 
@@ -74,43 +104,80 @@ namespace OnlineKirana.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product);
+            var Productrow = db.Products.Where(model => model.ProductID == id).FirstOrDefault();
+            Session["Image"] = Productrow.ProductImage;
+
+            return View(Productrow);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product product, HttpPostedFileBase file)
+        public ActionResult Edit(Product product)
         {
-            string pic = null;
-            if (file != null)
+            if (ModelState.IsValid == true)
             {
-                pic = System.IO.Path.GetFileName(file.FileName);
-                string path = System.IO.Path.Combine(Server.MapPath("~/Content/Images/"), pic);
-                file.SaveAs(path);
+                if (product.ImageFile != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(product.ImageFile.FileName);
+                    string extension = Path.GetExtension(product.ImageFile.FileName);
+                    HttpPostedFileBase postedFile = product.ImageFile;
+                    int length = postedFile.ContentLength;
+
+                    if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
+                    {
+                        if (length <= 4194304)
+                        {
+                            fileName = fileName + extension;
+                            product.ProductImage = "~/content/Images/" + fileName;
+                            fileName = Path.Combine(Server.MapPath("~/Content/Images/"), fileName);
+                            product.ImageFile.SaveAs(fileName);
+                            db.Entry(product).State = EntityState.Modified;
+                            int a = db.SaveChanges();
+
+                            if (a > 0)
+                            {
+                                TempData["UpdateMessage"] = "<script>alert('Product Updated Successfully.')</script>";
+                                ModelState.Clear();
+                                return RedirectToAction("Index", "ManageProducts");
+                            }
+                            else
+                            {
+                                TempData["UpdateMessage"] = "<script>alert('Product not Updated.')</script>";
+                            }
+
+                        }
+                        else
+                        {
+                            TempData["SizeMessage"] = "<script>alert('Image should be less than 4 MB.')</script>";
+                        }
+
+                    }
+                    else
+                    {
+                        TempData["ExtensionMessage"] = "<script>alert('format not supported')</script>";
+                    }
+                }
+                else
+                {
+                    product.ProductImage = Session["Image"].ToString();
+                    db.Entry(product).State = EntityState.Modified;
+                    int a = db.SaveChanges();
+
+                    if (a > 0)
+                    {
+                        TempData["UpdateMessage"] = "<script>alert('Product Updated Successfully.')</script>";
+                        ModelState.Clear();
+                        return RedirectToAction("Index", "ManageProducts");
+                    }
+                    else
+                    {
+                        TempData["UpdateMessage"] = "<script>alert('Product not Updated.')</script>";
+                    }
+                }
             }
-            byte[] b1 = System.Text.Encoding.UTF8.GetBytes(pic);
-            product.ProductImage = file != null ?b1 : product.ProductImage;
-            db.Entry(product).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("index");
+
+            return View();
         }
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
