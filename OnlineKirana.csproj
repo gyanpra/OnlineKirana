@@ -170,7 +170,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageProductsController.cs" />
@@ -316,8 +315,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\DashBoard.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\ManageProducts\Details.cshtml" />
     <Content Include="Views\ManageProducts\Create.cshtml" />
@@ -325,6 +322,7 @@
     <Content Include="Views\ManageProducts\Delete.cshtml" />
     <Content Include="Views\Product\Order.cshtml" />
     <Content Include="Views\ManageProducts\Edit.cshtml" />
+    <Content Include="Views\ManageProducts\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

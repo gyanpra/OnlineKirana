@@ -16,8 +16,36 @@ namespace OnlineKirana.Controllers
     {
         public OnlineKiranaEntities db = new OnlineKiranaEntities();
         // GET: ManageProducts
+
+        public ActionResult Login()
+        {
+            ViewBag.msg = "";
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(Admin admn)
+        {
+            var a = db.Admins.Where(l => l.Email.Equals(admn.Email) && l.Password.Equals(admn.Password)).ToList();
+            if (a.Count > 0)
+            {
+                Session["Email"] = admn.Email.ToString();
+                return RedirectToAction("Index", "ManageProducts");
+
+            }
+            else
+            {
+                ViewBag.msg = "Invalid UserName or Password";
+            }
+            return View("Index");
+        }
         public ActionResult Index()
         {
+            if (Session["Email"] == null)
+            {
+                ViewBag.msg = "Log in as Admin to proceed.";
+                return RedirectToAction("Login");
+            }
             var data = db.Products.ToList();
             return View(data);
         }
@@ -206,6 +234,12 @@ namespace OnlineKirana.Controllers
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Login", "ManageProducts");
         }
 
 
