@@ -181,6 +181,7 @@
     <Compile Include="Models\Admin.cs">
       <DependentUpon>OnlineKirana.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>OnlineKirana.tt</DependentUpon>
     </Compile>
@@ -323,6 +324,10 @@
     <Content Include="Views\Product\Order.cshtml" />
     <Content Include="Views\ManageProducts\Edit.cshtml" />
     <Content Include="Views\ManageProducts\Login.cshtml" />
+    <Content Include="Views\Product\Adtocart.cshtml" />
+    <Content Include="Views\Product\Index2.cshtml" />
+    <Content Include="Views\Product\checkout.cshtml" />
+    <Content Include="Views\Product\ContactUS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
