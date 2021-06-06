@@ -224,7 +224,7 @@ namespace OnlineKirana.Controllers
             return View(product);
         }
 
-
+        
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

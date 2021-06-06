@@ -72,7 +72,7 @@
                 @if (Session["Email"] != null)
                 {
                     <button type="button" class="btn btn-success">Welcome, @Session["Email"].ToString()</button><text>&nbsp;</text>
-                    <span class="navbar-text btn btn-danger">@Html.ActionLink("Logout", "Logout", "Admin")</span>
+                    <span class="navbar-text btn btn-danger">@Html.ActionLink("Logout", "Logout", "ManageProducts")</span>
                 }
 
             </div>
