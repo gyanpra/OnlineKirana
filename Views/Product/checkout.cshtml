@@ -1,0 +1,76 @@
+﻿
+    @{
+        ViewBag.Title = "checkout";
+    }
+
+
+    <h2>checkout</h2>
+
+    @if (TempData["cart"] != null)
+    {
+
+
+        <table class="table table-responsive">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>PRICE</th>
+                    <th>QUANTITY</th>
+                    <th>BILL</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in TempData["cart"] as List<OnlineKirana.Models.cart>)
+                {
+
+                <tr>
+                    <td>@item.productid</td>
+                    <td>@item.productname</td>
+                    <td>@item.price</td>
+                    <td>@item.qty</td>
+                    <td>@item.bill</td>
+                    <td><a class="btn btn-danger btn-sm" href="@Url.Action("Remove",new{id=@item.productid})">&#10060;</a></td>
+
+
+
+                </tr>
+
+                }
+
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                    <td>Total = @TempData["total"]</td>
+
+                </tr>
+            </tfoot>
+
+        </table>
+
+
+
+
+
+    }
+    else
+    {
+        <h2 style="color:red"> Cart is empty....</h2>
+        @Html.ActionLink("go Back", "Index2", "Product")
+    }
+
+    @if (TempData["cart"] != null)
+    {
+        using (Html.BeginForm())
+        {
+            <input type="submit" value="Shop Now" class="btn btn-primary" />
+
+        }
+
+    }
+
+
+
